@@ -1,8 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
-import tkinter
 from PIL import Image, ImageTk
-from tkinter_custom_button import TkinterCustomButton
 from text_sample import sample
 
 
@@ -15,6 +13,9 @@ def reset_timer():
     global start, timer
     typing_field.delete("1.0", "end")
     start = False
+    btn_text.set("START")
+    start_btn.configure(bg="forestgreen")
+    l1_text.set("Click START to enable the typing field.")
     timer_text['fg'] = 'blue'
     timer_text['text'] = 'Timer Ready!'
     typing_field['state'] = 'disabled'
@@ -25,6 +26,9 @@ def start_timer():
     global start, timer
     if not start:
         start = True
+        btn_text.set("RESET")
+        start_btn.configure(bg="blue")
+        l1_text.set("Click RESET to stop and reset")
         typing_field.delete("1.0", "end")
         typing_field['state'] = 'normal'
         count_down(61)
@@ -87,11 +91,14 @@ canvas.create_text(350, 380, text=text_to_show, font=("Ariel", 15), width=600)
 canvas.config(bg=BG_COLOR, highlightthickness=0)
 canvas.grid(row=0, column=0, padx=50, rowspan=4)
 
-start_btn = TkinterCustomButton(text="START/STOP", corner_radius=10, command=start_timer)
-start_btn.place(relx=0.5, rely=0.5, anchor=tkinter.CENTER)
+btn_text = StringVar()
+btn_text.set("START")
+start_btn = Button(textvariable=btn_text, command=start_timer, fg="white", bg="forestgreen", width=10)
 start_btn.grid(row=0, column=1, rowspan=1)
 
-l1 = Label(text="Click START/STOP to enable/disable the typing field.", bg=BG_COLOR, font=("Arial", 20))
+l1_text = StringVar()
+l1_text.set("Click START to enable the typing field.")
+l1 = Label(textvariable=l1_text, bg=BG_COLOR, font=("Arial", 20))
 l1.grid(row=1, column=1, rowspan=1)
 
 timer_text = Label(text="Timer Ready!", bg=BG_COLOR, font=("Arial", 25), fg="blue")
